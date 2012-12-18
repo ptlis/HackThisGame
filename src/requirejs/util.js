@@ -47,6 +47,32 @@ define(
             };
         };
         
+        
+        /*  Helper function that handles asynchronous asset loading & calls
+            callback on completion */
+        util.loadAssets = function(assetManifest, completeCallback, progressCallback) {
+            var collector   = util.collector(assetManifest.length, completeCallback, progressCallback);
+            var assets      = {};
+            for(var i = 0; i < assetManifest.length; i++) {
+                var ns              = assetManifest[i].ns;
+                switch(assetManifest[i].type) {
+                    case 'image':
+                        assets[ns]              = {};
+                        assets[ns].type         = assetManifest[i].type;
+                        assets[ns].asset        = new Image();
+                        assets[ns].asset.onload = collector;
+                        assets[ns].asset.src    = assetManifest[i].path;
+                        assets[ns].frames       = assetManifest[i].frames;
+                        break;
+                        
+                    default:
+                        throw 'Invalid type "' + assetManifest[i].type + '" provided.';
+                }
+            }
+            
+            return assets;
+        };
+        
 
         return util;
     }

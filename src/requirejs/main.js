@@ -8,9 +8,10 @@ requirejs.config({
 
 require(
     [   'jquery',
-        'util'],
+        'util',
+        'assetManifest'],
 
-    function($, util) {
+    function($, util, assetManifest) {
         var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                                     window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
@@ -24,51 +25,54 @@ require(
         
         // Animation function
         var update  = function() {
+            
+            // Clear canvas & reset default cursor
             context.clearRect(0, 0, width, height);
-
             canvas.css('cursor', 'default');
             
+            var source;
+            
+            
+            // New Game Button
             if(mouseX >= 0 && mouseX < 250 && mouseY >= 0 && mouseY < 70) {
-                context.drawImage(
-                        images[imagePaths[0]],
-                        0, 70, 250, 70,
-                        0, 0, 250, 70);
+                source  = assets['menu:new_game'].frames.hover;
                 canvas.css('cursor', 'pointer');
             }
             else {
-                context.drawImage(
-                        images[imagePaths[0]],
-                        0, 0, 250, 70,
-                        0, 0, 250, 70);
+                source  = assets['menu:new_game'].frames.base;
             }
+            context.drawImage(
+                    assets['menu:new_game'].asset,
+                    source.x, source.y, source.width, source.height,
+                    0, 0, 250, 70);
 
+            
+            // Continue button
             if(mouseX >= 0 && mouseX < 250 && mouseY >= 70 && mouseY < 140) {
-                context.drawImage(
-                        images[imagePaths[1]],
-                        0, 70, 250, 70,
-                        0, 70, 250, 70);
+                source  = assets['menu:continue'].frames.hover;
                 canvas.css('cursor', 'pointer');
             }
             else {
-                context.drawImage(
-                        images[imagePaths[1]],
-                        0, 0, 250, 70,
-                        0, 70, 250, 70);
+                source  = assets['menu:continue'].frames.base;
             }
+            context.drawImage(
+                    assets['menu:continue'].asset,
+                    source.x, source.y, source.width, source.height,
+                    0, 70, 250, 70);
 
+            
+            // Options Button
             if(mouseX >= 0 && mouseX < 250 && mouseY >= 140 && mouseY < 210) {
-                context.drawImage(
-                        images[imagePaths[2]],
-                        0, 70, 250, 70,
-                        0, 140, 250, 70);
+                source  = assets['menu:options'].frames.hover;
                 canvas.css('cursor', 'pointer');
             }
             else {
-                context.drawImage(
-                        images[imagePaths[2]],
-                        0, 0, 250, 70,
-                        0, 140, 250, 70);
+                source  = assets['menu:options'].frames.base;
             }
+            context.drawImage(
+                    assets['menu:options'].asset,
+                    source.x, source.y, source.width, source.height,
+                    0, 140, 250, 70);
 
             requestAnimationFrame(update);
             
@@ -82,19 +86,7 @@ require(
         };
         
     // Asset loading
-        var imagePaths  = [
-           'images/menu/new_game.png',
-           'images/menu/continue.png',
-           'images/menu/options.png'];
-        
-        
-        var collector   = util.collector(imagePaths.length, assetsLoaded);
-        var images      = {};
-        for(var i = 0; i < imagePaths.length; i++) {
-            images[imagePaths[i]]           = new Image();
-            images[imagePaths[i]].onload    = collector;
-            images[imagePaths[i]].src       = imagePaths[i];
-        }
+        var assets  = util.loadAssets(assetManifest, assetsLoaded);
         
         
     // Track mouse position
