@@ -1,8 +1,8 @@
 /*jshint jquery:true */
 
 define(
-    [],
-    function() {
+    [   'jquery'],
+    function($) {
         'use strict';
 
         var input   = {};

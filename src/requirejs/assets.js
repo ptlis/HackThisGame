@@ -4,19 +4,17 @@ define(
     [   'util'],
     function(util) {
 
-        var assetCache  = {};
+        var assetCache      = {};
+        var loadedBundles   = {};
 
         var assets      = {};
 
         /*  Helper function that handles asynchronous asset loading & calls
             callback on completion */
-        assets.loadAssets = function(bundleIdentifier, assetManifest, completeCallback, progressCallback) {
-            var assetArr    = {};
+        assets.load = function(bundleIdentifier, assetManifest, completeCallback, progressCallback) {
 
-            if(bundleIdentifier in assetCache && assetCache.hasOwnProperty(bundleIdentifier)) {
-                assetArr    = assetCache[bundleIdentifier];
-            }
-            else {
+            if(!(bundleIdentifier in loadedBundles)) {
+                var assetArr    = {};
                 var collector   = util.collector(assetManifest.length, completeCallback, progressCallback);
                 for(var i = 0; i < assetManifest.length; i++) {
                     var ns              = assetManifest[i].ns;
@@ -38,9 +36,20 @@ define(
                             throw 'Invalid type "' + assetManifest[i].type + '" provided.';
                     }
                 }
+
+                assetCache  = $.extend(assetCache, assetArr);
+                loadedBundles[bundleIdentifier] = true;
+            }
+        };
+
+        assets.get  = function(ns) {
+            var asset;
+
+            if(ns in assetCache) {
+                asset   = assetCache[ns];
             }
 
-            return assetArr;
+            return asset;
         };
 
         return assets;
