@@ -44,6 +44,21 @@ define(
             return manager;
         };
 
+
+        input.init = function() {
+            var canvas  = $('#game');
+
+            canvas.on('click', function(event) {
+                var offset  = $(this).offset();
+
+                var clickX  = event.pageX - offset.left;
+                var clickY  = event.pageY - offset.top;
+
+                canvas.trigger('game:click', [clickX, clickY]);
+            });
+        };
+
+
         return input;
     }
 );

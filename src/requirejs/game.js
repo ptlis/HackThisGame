@@ -16,9 +16,12 @@ define(
         var canvasWidth     = canvas.width();
         var canvasHeight    = canvas.height();
 
-        var gameState       = {};
         var mouseState      = input.mouseState(canvas);         // Track mouse state
         var trackFPS        = util.trackFPS($('#fps'));         // FPS tracking
+
+        // The game's state
+        var gameState           = {};
+        gameState.menuLayout    = 'menu:layout';
 
 
         /* Module api */
@@ -34,7 +37,7 @@ define(
 
 
             // Menu Layout
-            var layoutData  = assets.get('menu:layout').data;
+            var layoutData  = assets.get(gameState.menuLayout).data;
 
 
             var source;
@@ -85,13 +88,33 @@ define(
         };
 
 
+        /* Initialise the game. */
         game.init = function() {
+            input.init();
+
             // When assets are loaded begin animating
             var assetsLoaded    = function() {
                 requestAnimationFrame(game.render);
             };
             assets.load('menu_assets', assetManifest, assetsLoaded);
+
+            canvas.on('game:click', game.handleClick);
+        };
+
+
+        game.handleClick    = function(event, clickX, clickY) {
+            var layoutData  = assets.get(gameState.menuLayout).data;
+            var dest;
+            for(var i = 0; i < layoutData.elements.length; i++) {
+                dest    = layoutData.elements[i].dest;
+
+                if(clickX >= dest.x && clickX < (dest.x + dest.width) && clickY >= dest.y && clickY < (dest.y + dest.height)) {
+                    canvas.trigger(layoutData.elements[i].trigger);
+console.log(layoutData.elements[i].trigger);
+                }
+            }
         }
+
 
         return game;
     }
