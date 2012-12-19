@@ -9,8 +9,8 @@ define(
             // Menu Assets
             {
                 type:   'image',
-                path:   'images/menu/new_game.png',
-                ns:     'menu:new_game',
+                path:   'images/menu/root/new_game.png',
+                ns:     'menu:root:new_game',
                 frames: {
                     base:   {
                         x:      0,
@@ -40,8 +40,8 @@ define(
             },
             {
                 type:   'image',
-                path:   'images/menu/continue.png',
-                ns:     'menu:continue',
+                path:   'images/menu/root/continue.png',
+                ns:     'menu:root:continue',
                 frames: {
                     base:   {
                         x:      0,
@@ -71,8 +71,8 @@ define(
             },
             {
                 type:   'image',
-                path:   'images/menu/options.png',
-                ns:     'menu:options',
+                path:   'images/menu/root/options.png',
+                ns:     'menu:root:options',
                 frames: {
                     base:   {
                         x:      0,
@@ -102,8 +102,8 @@ define(
             },
             {
                 type:   'image',
-                path:   'images/menu/fork_me.png',
-                ns:     'menu:fork_me',
+                path:   'images/menu/root/fork_me.png',
+                ns:     'menu:root:fork_me',
                 frames: {
                     base:   {
                         x:      0,
@@ -127,8 +127,8 @@ define(
             },
             {
                 type:   'image',
-                path:   'images/menu/background.png',
-                ns:     'menu:background',
+                path:   'images/menu/root/background.png',
+                ns:     'menu:root:background',
                 frames: {
                     base:   {
                         x:      0,
@@ -140,18 +140,18 @@ define(
             },
             {
                 type:   'json',
-                ns:     'menu:layout',
+                ns:     'menu:root:layout',
                 data:   {
                     background : {
-                        ns:     'menu:background',
+                        ns:     'menu:root:background',
                         x:      0,
                         y:      0,
                         width:  800,
-                        height: 800
+                        height: 600
                     },
                     elements : [
                         {
-                            ns:         'menu:continue',
+                            ns:         'menu:root:continue',
                             trigger:    'game:continue',
                             dest:   {
                                 x:      275,
@@ -161,7 +161,7 @@ define(
                             }
                         },
                         {
-                            ns:         'menu:new_game',
+                            ns:         'menu:root:new_game',
                             trigger:    'game:new_game',
                             dest:   {
                                 x:      275,
@@ -171,7 +171,7 @@ define(
                             }
                         },
                         {
-                            ns:         'menu:options',
+                            ns:         'menu:root:options',
                             trigger:    'game:options',
                             dest:   {
                                 x:      275,
@@ -181,7 +181,7 @@ define(
                             }
                         },
                         {
-                            ns:         'menu:fork_me',
+                            ns:         'menu:root:fork_me',
                             trigger:    'game:fork_me',
                             dest: {
                                 x:      659,
@@ -190,6 +190,21 @@ define(
                                 height: 141
                             }
                         }
+                    ]
+                }
+            },
+            {
+                type:   'json',
+                ns:     'menu:new_game:layout',
+                data:   {
+                    background : {
+                        ns:     'menu:new_game:background',
+                        x:      0,
+                        y:      0,
+                        width:  800,
+                        height: 600
+                    },
+                    elements : [
                     ]
                 }
             }

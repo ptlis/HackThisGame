@@ -21,7 +21,7 @@ define(
 
         // The game's state
         var gameState           = {};
-        gameState.menuLayout    = 'menu:layout';
+        gameState.menu          = 'menu:root';
 
 
         /* Module api */
@@ -37,7 +37,7 @@ define(
 
 
             // Menu Layout
-            var layoutData  = assets.get(gameState.menuLayout).data;
+            var layoutData  = assets.get(gameState.menu + ':layout').data;
 
 
             var source;
@@ -110,7 +110,7 @@ define(
 
 
         game.handleClick    = function(event, clickX, clickY) {
-            var layoutData  = assets.get(gameState.menuLayout).data;
+            var layoutData  = assets.get(gameState.menu + ':layout').data;
             var dest;
             for(var i = 0; i < layoutData.elements.length; i++) {
                 dest    = layoutData.elements[i].dest;
