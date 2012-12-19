@@ -15,92 +15,70 @@ require(
         var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                                     window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
-        var trackFPS    = util.trackFPS($('#fps'));
-            
+
         var canvas  = $('#game');
         var context = canvas[0].getContext('2d');
         var width   = canvas.width();
         var height  = canvas.height();
-        
-        
-        // Animation function
-        var update  = function() {
-            
-            // Clear canvas & reset default cursor
-            context.clearRect(0, 0, width, height);
-            canvas.css('cursor', 'default');
-            
-            var source;
-            
-            
-            // New Game Button
-            if(mouseX >= 0 && mouseX < 250 && mouseY >= 0 && mouseY < 70) {
-                source  = assets['menu:new_game'].frames.hover;
-                canvas.css('cursor', 'pointer');
-            }
-            else {
-                source  = assets['menu:new_game'].frames.base;
-            }
-            context.drawImage(
-                    assets['menu:new_game'].asset,
-                    source.x, source.y, source.width, source.height,
-                    0, 0, 250, 70);
 
-            
-            // Continue button
-            if(mouseX >= 0 && mouseX < 250 && mouseY >= 70 && mouseY < 140) {
-                source  = assets['menu:continue'].frames.hover;
-                canvas.css('cursor', 'pointer');
-            }
-            else {
-                source  = assets['menu:continue'].frames.base;
-            }
-            context.drawImage(
-                    assets['menu:continue'].asset,
-                    source.x, source.y, source.width, source.height,
-                    0, 70, 250, 70);
-
-            
-            // Options Button
-            if(mouseX >= 0 && mouseX < 250 && mouseY >= 140 && mouseY < 210) {
-                source  = assets['menu:options'].frames.hover;
-                canvas.css('cursor', 'pointer');
-            }
-            else {
-                source  = assets['menu:options'].frames.base;
-            }
-            context.drawImage(
-                    assets['menu:options'].asset,
-                    source.x, source.y, source.width, source.height,
-                    0, 140, 250, 70);
-
-            requestAnimationFrame(update);
-            
-            trackFPS();
-        };
-        
-        
         // When assets are loaded begin animating
         var assetsLoaded    = function() {
             requestAnimationFrame(update);
         };
-        
-    // Asset loading
-        var assets  = util.loadAssets(assetManifest, assetsLoaded);
-        
-        
-    // Track mouse position
-        var mouseX  = -1;
-        var mouseY  = -1;
-        canvas.on('mousemove', function(event) {
-            var offset  = $(this).offset();
+        var trackFPS        = util.trackFPS($('#fps'));                     // FPS tracking
+        var assets          = util.loadAssets(assetManifest, assetsLoaded); // Asset loading
+        var mouseManager    = util.mouseManager(canvas);                    // Track mouse state
 
-            mouseX  = event.pageX - offset.left;
-            mouseY  = event.pageY - offset.top;
-        });
-        canvas.on('mouseleave', function(event) {
-            mouseX  = -1;
-            mouseY  = -1;
-        });
+        // Animation function
+        var update  = function() {
+
+            // Clear canvas & reset default cursor
+            context.clearRect(0, 0, width, height);
+            canvas.css('cursor', 'default');
+
+
+            // Layout menu
+            var layoutData  = assets['menu:layout'].data;
+
+
+            var source;
+            var dest;
+
+
+            // Background
+            source  = assets[layoutData.background.ns].frames.base;
+            dest    = layoutData.background;
+            context.drawImage(
+                    assets['menu:background'].asset,
+                    source.x, source.y, source.width, source.height,
+                    dest.x,   dest.y,   dest.width,   dest.height);
+
+            // Elements
+            var curElem;
+            for(var i = 0; i < layoutData.elements.length; i++) {
+                curElem = layoutData.elements[i];
+
+                if(mouseManager.x >= curElem.x && mouseManager.x < (curElem.x + curElem.width) && mouseManager.y >= curElem.y && mouseManager.y < (curElem.y + curElem.height)) {
+                    canvas.css('cursor', 'pointer');
+                    if(!mouseManager.down) {
+                        source  = assets[curElem.ns].frames.hover;
+                    }
+                    else {
+                        source  = assets[curElem.ns].frames.click;
+                    }
+                }
+                else {
+                    source  = assets[curElem.ns].frames.base;
+                }
+                context.drawImage(
+                        assets[curElem.ns].asset,
+                        source.x, source.y, source.width, source.height,
+                        curElem.x, curElem.y, curElem.width, curElem.height);
+            }
+
+            requestAnimationFrame(update);
+
+            trackFPS();
+        };
     }
 );
