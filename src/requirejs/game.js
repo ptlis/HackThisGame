@@ -22,6 +22,7 @@ define(
         // The game's state
         var gameState           = {};
         gameState.context       = 'menu:root';
+        gameState.saveSlot;
 
 
         /* Module api */
@@ -101,7 +102,15 @@ define(
             canvas
                 .on('game:click',           game.handleClick)
                 .on('game:menu:change',     game.menuChange)
-                .on('game:menu:open_url',   game.openURL);
+                .on('game:menu:open_url',   game.openURL)
+                .on('game:set_save_slot',   game.setSaveSlot);
+        };
+
+
+        game.setSaveSlot = function(event, slot) {
+console.log('slot ' + slot)
+            gameState.saveSlot      = slot;
+            game.menuChange(event, 'menu:customise_save');
         };
 
 

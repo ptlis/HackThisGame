@@ -363,8 +363,8 @@ define(
                         {
                             ns:         'menu:new_game:slot_a',
                             trigger:    {
-                                event:  'game:menu:change',
-                                params: ['game:slot_a']
+                                event:  'game:set_save_slot',
+                                params: ['slot_a']
                             },
                             dest:   {
                                 x:      275,
@@ -376,8 +376,8 @@ define(
                         {
                             ns:         'menu:new_game:slot_b',
                             trigger:    {
-                                event:  'game:menu:change',
-                                params: ['game:slot_b']
+                                event:  'game:set_save_slot',
+                                params: ['slot_b']
                             },
                             dest:   {
                                 x:      275,
@@ -389,8 +389,8 @@ define(
                         {
                             ns:         'menu:new_game:slot_c',
                             trigger:    {
-                                event:  'game:menu:change',
-                                params: ['game:slot_c']
+                                event:  'game:set_save_slot',
+                                params: ['slot_c']
                             },
                             dest:   {
                                 x:      275,
@@ -413,6 +413,48 @@ define(
                             }
                         }
                     ]
+                }
+            },
+            {
+                type:   'image',
+                path:   'images/menu/customise_save/background.png',
+                ns:     'menu:customise_save:background',
+                frames: {
+                    base:   {
+                        x:      0,
+                        y:      0,
+                        width:  800,
+                        height: 600
+                    }
+                }
+            },
+            {
+                type:   'json',
+                ns:     'menu:customise_save:layout',
+                data:   {
+                    background : {
+                        ns:     'menu:customise_save:background',
+                        x:      0,
+                        y:      0,
+                        width:  800,
+                        height: 600
+                    },
+                    elements : [
+                                {
+                        ns:         'menu:back',
+                        trigger:    {
+                            event:  'game:menu:change',
+                            params: ['menu:new_game']
+                        },
+                        dest:   {
+                            x:      275,
+                            y:      440,
+                            width:  250,
+                            height: 70
+                        }
+                    }
+                    ]
+
                 }
             }
 
