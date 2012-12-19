@@ -99,6 +99,13 @@ define(
             assets.load('menu_assets', assetManifest, assetsLoaded);
 
             canvas.on('game:click', game.handleClick);
+
+            canvas.on('game:fork_me', game.forkMe);
+        };
+
+
+        game.forkMe = function() {
+            window.open('https://github.com/ptlis/HackThisGame');
         };
 
 

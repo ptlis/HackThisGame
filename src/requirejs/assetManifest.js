@@ -102,6 +102,31 @@ define(
             },
             {
                 type:   'image',
+                path:   'images/menu/fork_me.png',
+                ns:     'menu:fork_me',
+                frames: {
+                    base:   {
+                        x:      0,
+                        y:      0,
+                        width:  141,
+                        height: 141
+                    },
+                    hover:  {
+                        x:      0,
+                        y:      141,
+                        width:  141,
+                        height: 141
+                    },
+                    click:  {
+                        x:      0,
+                        y:      282,
+                        width:  141,
+                        height: 141
+                    }
+                }
+            },
+            {
+                type:   'image',
                 path:   'images/menu/background.png',
                 ns:     'menu:background',
                 frames: {
@@ -153,6 +178,16 @@ define(
                                 y:      335,
                                 width:  250,
                                 height: 70
+                            }
+                        },
+                        {
+                            ns:         'menu:fork_me',
+                            trigger:    'game:fork_me',
+                            dest: {
+                                x:      659,
+                                y:      0,
+                                width:  141,
+                                height: 141
                             }
                         }
                     ]
