@@ -29,6 +29,12 @@ define(
                         y:      140,
                         width:  250,
                         height: 70
+                    },
+                    disabled:   {
+                        x:      0,
+                        y:      210,
+                        width:  250,
+                        height: 70
                     }
                 }
             },
@@ -52,6 +58,12 @@ define(
                     click:  {
                         x:      0,
                         y:      140,
+                        width:  250,
+                        height: 70
+                    },
+                    disabled:   {
+                        x:      0,
+                        y:      210,
                         width:  250,
                         height: 70
                     }
@@ -79,6 +91,12 @@ define(
                         y:      140,
                         width:  250,
                         height: 70
+                    },
+                    disabled:   {
+                        x:      0,
+                        y:      210,
+                        width:  250,
+                        height: 70
                     }
                 }
             },
@@ -99,34 +117,43 @@ define(
                 type:   'json',
                 ns:     'menu:layout',
                 data:   {
-                    'background' : {
+                    background : {
                         ns:     'menu:background',
                         x:      0,
                         y:      0,
                         width:  800,
                         height: 800
                     },
-                    'elements' : [
+                    elements : [
                         {
-                            ns:     'menu:continue',
-                            x:      275,
-                            y:      195,
-                            width:  250,
-                            height: 70
+                            ns:         'menu:continue',
+                            trigger:    'game:continue',
+                            dest:   {
+                                x:      275,
+                                y:      195,
+                                width:  250,
+                                height: 70
+                            }
                         },
                         {
-                            ns:     'menu:new_game',
-                            x:      275,
-                            y:      265,
-                            width:  250,
-                            height: 70
+                            ns:         'menu:new_game',
+                            trigger:    'game:new_game',
+                            dest:   {
+                                x:      275,
+                                y:      265,
+                                width:  250,
+                                height: 70
+                            }
                         },
                         {
-                            ns:     'menu:options',
-                            x:      275,
-                            y:      335,
-                            width:  250,
-                            height: 70
+                            ns:         'menu:options',
+                            trigger:    'game:options',
+                            dest:   {
+                                x:      275,
+                                y:      335,
+                                width:  250,
+                                height: 70
+                            }
                         }
                     ]
                 }
