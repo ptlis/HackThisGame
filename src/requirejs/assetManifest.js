@@ -6,7 +6,41 @@ define(
         'use strict';
 
         var assets  = [
-            // Menu Assets
+
+           // Shared menu items
+               {
+                   type:   'image',
+                   path:   'images/menu/back.png',
+                   ns:     'menu:back',
+                   frames: {
+                       base:   {
+                           x:      0,
+                           y:      0,
+                           width:  250,
+                           height: 70
+                       },
+                       hover:  {
+                           x:      0,
+                           y:      70,
+                           width:  250,
+                           height: 70
+                       },
+                       click:  {
+                           x:      0,
+                           y:      140,
+                           width:  250,
+                           height: 70
+                       },
+                       disabled:   {
+                           x:      0,
+                           y:      210,
+                           width:  250,
+                           height: 70
+                       }
+                   }
+               },
+
+            // Root Menu Assets
             {
                 type:   'image',
                 path:   'images/menu/root/new_game.png',
@@ -152,7 +186,10 @@ define(
                     elements : [
                         {
                             ns:         'menu:root:continue',
-                            trigger:    'game:continue',
+                            trigger:    {
+                                event:  'game:menu:change',
+                                params: ['game:continue']
+                            },
                             dest:   {
                                 x:      275,
                                 y:      195,
@@ -162,7 +199,10 @@ define(
                         },
                         {
                             ns:         'menu:root:new_game',
-                            trigger:    'game:new_game',
+                            trigger:    {
+                                event:  'game:menu:change',
+                                params: ['menu:new_game']
+                            },
                             dest:   {
                                 x:      275,
                                 y:      265,
@@ -172,7 +212,10 @@ define(
                         },
                         {
                             ns:         'menu:root:options',
-                            trigger:    'game:options',
+                            trigger:    {
+                                event:  'game:menu:change',
+                                params: ['game:options']
+                            },
                             dest:   {
                                 x:      275,
                                 y:      335,
@@ -182,7 +225,10 @@ define(
                         },
                         {
                             ns:         'menu:root:fork_me',
-                            trigger:    'game:fork_me',
+                            trigger:    {
+                                event:  'game:menu:open_url',
+                                params: ['https://github.com/ptlis/HackThisGame']
+                            },
                             dest: {
                                 x:      659,
                                 y:      0,
@@ -191,6 +237,115 @@ define(
                             }
                         }
                     ]
+                }
+            },
+
+
+        // New game menu assets
+            {
+                type:   'image',
+                path:   'images/menu/new_game/slot_a.png',
+                ns:     'menu:new_game:slot_a',
+                frames: {
+                    base:   {
+                        x:      0,
+                        y:      0,
+                        width:  250,
+                        height: 70
+                    },
+                    hover:  {
+                        x:      0,
+                        y:      70,
+                        width:  250,
+                        height: 70
+                    },
+                    click:  {
+                        x:      0,
+                        y:      140,
+                        width:  250,
+                        height: 70
+                    },
+                    disabled:   {
+                        x:      0,
+                        y:      210,
+                        width:  250,
+                        height: 70
+                    }
+                }
+            },
+            {
+                type:   'image',
+                path:   'images/menu/new_game/slot_b.png',
+                ns:     'menu:new_game:slot_b',
+                frames: {
+                    base:   {
+                        x:      0,
+                        y:      0,
+                        width:  250,
+                        height: 70
+                    },
+                    hover:  {
+                        x:      0,
+                        y:      70,
+                        width:  250,
+                        height: 70
+                    },
+                    click:  {
+                        x:      0,
+                        y:      140,
+                        width:  250,
+                        height: 70
+                    },
+                    disabled:   {
+                        x:      0,
+                        y:      210,
+                        width:  250,
+                        height: 70
+                    }
+                }
+            },
+            {
+                type:   'image',
+                path:   'images/menu/new_game/slot_c.png',
+                ns:     'menu:new_game:slot_c',
+                frames: {
+                    base:   {
+                        x:      0,
+                        y:      0,
+                        width:  250,
+                        height: 70
+                    },
+                    hover:  {
+                        x:      0,
+                        y:      70,
+                        width:  250,
+                        height: 70
+                    },
+                    click:  {
+                        x:      0,
+                        y:      140,
+                        width:  250,
+                        height: 70
+                    },
+                    disabled:   {
+                        x:      0,
+                        y:      210,
+                        width:  250,
+                        height: 70
+                    }
+                }
+            },
+            {
+                type:   'image',
+                path:   'images/menu/new_game/background.png',
+                ns:     'menu:new_game:background',
+                frames: {
+                    base:   {
+                        x:      0,
+                        y:      0,
+                        width:  800,
+                        height: 600
+                    }
                 }
             },
             {
@@ -205,6 +360,58 @@ define(
                         height: 600
                     },
                     elements : [
+                        {
+                            ns:         'menu:new_game:slot_a',
+                            trigger:    {
+                                event:  'game:menu:change',
+                                params: ['game:slot_a']
+                            },
+                            dest:   {
+                                x:      275,
+                                y:      195,
+                                width:  250,
+                                height: 70
+                            }
+                        },
+                        {
+                            ns:         'menu:new_game:slot_b',
+                            trigger:    {
+                                event:  'game:menu:change',
+                                params: ['game:slot_b']
+                            },
+                            dest:   {
+                                x:      275,
+                                y:      265,
+                                width:  250,
+                                height: 70
+                            }
+                        },
+                        {
+                            ns:         'menu:new_game:slot_c',
+                            trigger:    {
+                                event:  'game:menu:change',
+                                params: ['game:slot_c']
+                            },
+                            dest:   {
+                                x:      275,
+                                y:      335,
+                                width:  250,
+                                height: 70
+                            }
+                        },
+                        {
+                            ns:         'menu:back',
+                            trigger:    {
+                                event:  'game:menu:change',
+                                params: ['menu:root']
+                            },
+                            dest:   {
+                                x:      275,
+                                y:      440,
+                                width:  250,
+                                height: 70
+                            }
+                        }
                     ]
                 }
             }

@@ -21,7 +21,7 @@ define(
 
         // The game's state
         var gameState           = {};
-        gameState.menu          = 'menu:root';
+        gameState.context       = 'menu:root';
 
 
         /* Module api */
@@ -37,7 +37,7 @@ define(
 
 
             // Menu Layout
-            var layoutData  = assets.get(gameState.menu + ':layout').data;
+            var layoutData  = assets.get(gameState.context + ':layout').data;
 
 
             var source;
@@ -98,26 +98,32 @@ define(
             };
             assets.load('menu_assets', assetManifest, assetsLoaded);
 
-            canvas.on('game:click', game.handleClick);
-
-            canvas.on('game:fork_me', game.forkMe);
+            canvas
+                .on('game:click',           game.handleClick)
+                .on('game:menu:change',     game.menuChange)
+                .on('game:menu:open_url',   game.openURL);
         };
 
 
-        game.forkMe = function() {
-            window.open('https://github.com/ptlis/HackThisGame');
+        game.menuChange = function(event, menuNS) {
+            gameState.context   = menuNS;
+        };
+
+
+        game.openURL = function(event, URL) {
+            window.open(URL);
         };
 
 
         game.handleClick    = function(event, clickX, clickY) {
-            var layoutData  = assets.get(gameState.menu + ':layout').data;
+            var layoutData  = assets.get(gameState.context + ':layout').data;
             var dest;
             for(var i = 0; i < layoutData.elements.length; i++) {
                 dest    = layoutData.elements[i].dest;
 
                 if(clickX >= dest.x && clickX < (dest.x + dest.width) && clickY >= dest.y && clickY < (dest.y + dest.height)) {
-                    canvas.trigger(layoutData.elements[i].trigger);
-console.log(layoutData.elements[i].trigger);
+                    canvas.trigger(layoutData.elements[i].trigger.event, layoutData.elements[i].trigger.params);
+console.log(layoutData.elements[i].trigger.event + '  ' + JSON.stringify(layoutData.elements[i].trigger.params));
                 }
             }
         }
