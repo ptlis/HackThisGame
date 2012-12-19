@@ -48,36 +48,6 @@ define(
         };
 
 
-        /*  Helper function that handles asynchronous asset loading & calls
-            callback on completion */
-        util.loadAssets = function(assetManifest, completeCallback, progressCallback) {
-            var collector   = util.collector(assetManifest.length, completeCallback, progressCallback);
-            var assets      = {};
-            for(var i = 0; i < assetManifest.length; i++) {
-                var ns              = assetManifest[i].ns;
-                delete(assetManifest[i].ns);
-                switch(assetManifest[i].type) {
-                    case 'image':
-                        assets[ns]              = assetManifest[i];
-                        assets[ns].asset        = new Image();
-                        assets[ns].asset.onload = collector;
-                        assets[ns].asset.src    = assetManifest[i].path;
-                        break;
-
-                    case 'json':
-                        assets[ns]              = assetManifest[i];
-                        collector();
-                        break;
-
-                    default:
-                        throw 'Invalid type "' + assetManifest[i].type + '" provided.';
-                }
-            }
-
-            return assets;
-        };
-
-
         return util;
     }
 );

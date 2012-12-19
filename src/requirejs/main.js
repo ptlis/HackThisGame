@@ -10,9 +10,10 @@ require(
     [   'jquery',
         'util',
         'assetManifest',
-        'input'],
+        'input',
+        'assets'],
 
-    function($, util, assetManifest, input) {
+    function($, util, assetManifest, input, assets) {
         var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                                     window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
@@ -27,7 +28,7 @@ require(
             requestAnimationFrame(update);
         };
         var trackFPS        = util.trackFPS($('#fps'));                     // FPS tracking
-        var assets          = util.loadAssets(assetManifest, assetsLoaded); // Asset loading
+        var assetArr        = assets.loadAssets('menu_assets', assetManifest, assetsLoaded); // Asset loading
         var mouseState      = input.mouseState(canvas);                    // Track mouse state
 
         // Animation function
@@ -39,7 +40,7 @@ require(
 
 
             // Menu Layout
-            var layoutData  = assets['menu:layout'].data;
+            var layoutData  = assetArr['menu:layout'].data;
 
 
             var source;
@@ -47,10 +48,10 @@ require(
 
 
             // Draw Menu Background
-            source  = assets[layoutData.background.ns].frames.base;
+            source  = assetArr[layoutData.background.ns].frames.base;
             dest    = layoutData.background;
             context.drawImage(
-                    assets['menu:background'].asset,
+                    assetArr['menu:background'].asset,
                     source.x, source.y, source.width, source.height,
                     dest.x,   dest.y,   dest.width,   dest.height);
 
@@ -63,18 +64,18 @@ require(
                 if(mouseState.x >= dest.x && mouseState.x < (dest.x + dest.width) && mouseState.y >= dest.y && mouseState.y < (dest.y + dest.height)) {
                     canvas.css('cursor', 'pointer');
                     if(!mouseState.down) {
-                        source  = assets[curElem.ns].frames.hover;
+                        source  = assetArr[curElem.ns].frames.hover;
                     }
                     else {
-                        source  = assets[curElem.ns].frames.click;
+                        source  = assetArr[curElem.ns].frames.click;
                     }
                 }
                 else {
-                    source  = assets[curElem.ns].frames.base;
+                    source  = assetArr[curElem.ns].frames.base;
                 }
 
                 context.drawImage(
-                        assets[curElem.ns].asset,
+                        assetArr[curElem.ns].asset,
                         source.x, source.y, source.width, source.height,
                         dest.x, dest.y, dest.width, dest.height);
             }
@@ -90,7 +91,7 @@ require(
             var clickX  = event.pageX - offset.left;
             var clickY  = event.pageY - offset.top;
 
-            var layoutData  = assets['menu:layout'].data;
+            var layoutData  = assetArr['menu:layout'].data;
             var dest;
             for(var i = 0; i < layoutData.elements.length; i++) {
                 dest    = layoutData.elements[i].dest;
